@@ -2,7 +2,7 @@ module Client
 
 using HTTP, JSON3
 
-const SERVER = Ref{String}()
+const SERVER = Ref{String}("http://localhost:8080")
 
 function createAlbum(name, artist, year, songs)
     body = (; name, artist, year, songs)
