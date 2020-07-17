@@ -1,6 +1,7 @@
 module Resource
 
-using HTTP
+using HTTP, JSON3
+using ..Model, ..Service
 
 const ROUTER = HTTP.Router()
 
