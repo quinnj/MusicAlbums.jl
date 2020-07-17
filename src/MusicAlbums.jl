@@ -1,5 +1,7 @@
 module MusicAlbums
 
+export Model, Mapper, Service, Resource, Client
+
 include("Model.jl")
 
 include("Mapper.jl")
