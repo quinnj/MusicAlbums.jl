@@ -1,0 +1,14 @@
+name = "MusicAlbums"
+uuid = "b7b9ff52-2528-4e0e-b86f-a161620f4c01"
+authors = ["Jacob Quinn <quinn.jacobd@gmail.com>"]
+version = "0.1.0"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
+

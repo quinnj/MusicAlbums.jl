@@ -1,0 +1,5 @@
+module Resource
+
+
+
+end # module
