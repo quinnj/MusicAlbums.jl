@@ -3,6 +3,10 @@ uuid = "b7b9ff52-2528-4e0e-b86f-a161620f4c01"
 authors = ["Jacob Quinn <quinn.jacobd@gmail.com>"]
 version = "0.1.0"
 
+[deps]
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+
 [compat]
 julia = "1"
 
