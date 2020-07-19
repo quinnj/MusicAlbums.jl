@@ -21,8 +21,8 @@ function get(id)
     return STORE[id]
 end
 
-function delete!(id)
-    Base.delete!(STORE, id)
+function delete(id)
+    delete!(STORE, id)
     return
 end
 
