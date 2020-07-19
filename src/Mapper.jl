@@ -26,7 +26,7 @@ function delete!(id)
     return
 end
 
-function getAllAbums()
+function getAllAlbums()
     return collect(values(STORE))
 end
 
