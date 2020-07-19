@@ -20,4 +20,13 @@ HTTP.@register(ROUTER, "DELETE", "/album/*", deleteAlbum)
 pickAlbumToListen(req) = Service.pickAlbumToListen()::Album
 HTTP.@register(ROUTER, "GET", "/", pickAlbumToListen)
 
+function requestHandler(req)
+    obj = HTTP.handle(ROUTER, req)
+    return HTTP.Response(200, JSON3.write(obj))
+end
+
+function run()
+    HTTP.serve(requestHandler, "0.0.0.0", 8080)
+end
+
 end # module
