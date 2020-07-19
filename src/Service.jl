@@ -26,7 +26,7 @@ function updateAlbum(id, updated)
 end
 
 function deleteAlbum(id)
-    Mapper.delete!(id)
+    Mapper.delete(id)
     return
 end
 
