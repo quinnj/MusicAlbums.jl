@@ -32,10 +32,10 @@ end
 
 function pickAlbumToListen()
     albums = Mapper.getAllAlbums()
-    leastTimesPicked = minimum(x->x.timesPicked, albums)
-    leastPickedAlbums = filter(x->x.timesPicked == leastTimesPicked, albums)
+    leastTimesPicked = minimum(x->x.timespicked, albums)
+    leastPickedAlbums = filter(x->x.timespicked == leastTimesPicked, albums)
     pickedAlbum = rand(leastPickedAlbums)
-    pickedAlbum.timesPicked += 1
+    pickedAlbum.timespicked += 1
     Mapper.store!(pickedAlbum)
     return pickedAlbum
 end
