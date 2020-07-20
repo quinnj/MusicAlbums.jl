@@ -11,13 +11,14 @@ mutable struct Album
     name::String
     artist::String
     year::Int64
-    songs::Vector{String}
     timespicked::Int64 # service-managed
+    songs::Vector{String}
 end
 
 ==(x::Album, y::Album) = x.id == y.id
-Album() = Album(0, "", "", 0, String[], 0)
-Album(name, artist, year, songs) = Album(0, name, artist, year, songs, 0)
+Album() = Album(0, "", "", 0, 0, String[])
+Album(name, artist, year, songs) = Album(0, name, artist, year, 0, songs)
 StructTypes.StructType(::Type{Album}) = StructTypes.Mutable()
+StructTypes.idproperty(::Type{Album}) = :id
 
 end # module

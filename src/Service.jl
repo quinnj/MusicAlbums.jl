@@ -9,7 +9,7 @@ function createAlbum(obj)
     @assert haskey(obj, :songs) && !isempty(obj.songs)
     @assert haskey(obj, :year) && 1900 < obj.year < Dates.year(Dates.now())
     album = Album(obj.name, obj.artist, obj.year, obj.songs)
-    Mapper.store!(album)
+    Mapper.create!(album)
     return album
 end
 
@@ -21,7 +21,7 @@ function updateAlbum(id, updated)
     album.artist = updated.artist
     album.year = updated.year
     album.songs = updated.songs
-    Mapper.store!(album)
+    Mapper.update(album)
     return album
 end
 
@@ -36,7 +36,7 @@ function pickAlbumToListen()
     leastPickedAlbums = filter(x->x.timespicked == leastTimesPicked, albums)
     pickedAlbum = rand(leastPickedAlbums)
     pickedAlbum.timespicked += 1
-    Mapper.store!(pickedAlbum)
+    Mapper.update(pickedAlbum)
     return pickedAlbum
 end
 
