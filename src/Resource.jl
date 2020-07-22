@@ -1,6 +1,6 @@
 module Resource
 
-using HTTP, JSON3
+using Dates, HTTP, JSON3
 using ..Model, ..Service
 
 const ROUTER = HTTP.Router()
@@ -21,8 +21,22 @@ pickAlbumToListen(req) = Service.pickAlbumToListen()::Album
 HTTP.@register(ROUTER, "GET", "/", pickAlbumToListen)
 
 function requestHandler(req)
-    obj = HTTP.handle(ROUTER, req)
-    return HTTP.Response(200, JSON3.write(obj))
+    start = Dates.now(Dates.UTC)
+    @info (timestamp=start, event="ServiceRequestBegin", tid=Threads.threadid(), method=req.method, target=req.target)
+    local resp
+    try
+        obj = HTTP.handle(ROUTER, req)
+        resp = HTTP.Response(200, JSON3.write(obj))
+    catch e
+        s = IOBuffer()
+        showerror(s, e, catch_backtrace(); backtrace=true)
+        errormsg = String(resize!(s.data, s.size))
+        @error errormsg
+        resp = HTTP.Response(500, errormsg)
+    end
+    stop = Dates.now(Dates.UTC)
+    @info (timestamp=stop, event="ServiceRequestEnd", tid=Threads.threadid(), method=req.method, target=req.target, duration=Dates.value(stop - start), status=resp.status, bodysize=length(resp.body))
+    return resp
 end
 
 function run()

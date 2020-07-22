@@ -17,7 +17,8 @@ using .Resource
 include("Client.jl")
 using .Client
 
-function run()
+function run(dbfile)
+    Mapper.init(dbfile)
     Resource.run()
 end
 

@@ -7,21 +7,25 @@ const DB = Ref{SQLite.DB}()
 getdb() = DB[]
 const COUNTER = Ref{Int64}(0)
 
-function __init__()
-    DB[] = SQLite.DB()
-    DBInterface.execute(getdb(), """
-        CREATE TABLE album (
-            id INTEGER,
-            name TEXT,
-            artist TEXT,
-            year INTEGER,
-            timespicked INTEGER DEFAULT 0,
-            songs TEXT
-        )
-    """)
-    DBInterface.execute(getdb(), """
-        CREATE INDEX idx_album_id ON album (id)
-    """)
+function init(dbfile)
+    if isfile(dbfile)
+        DB[] = SQLite.DB(dbfile)
+    else
+        DB[] = SQLite.DB(dbfile)
+        DBInterface.execute(getdb(), """
+            CREATE TABLE album (
+                id INTEGER,
+                name TEXT,
+                artist TEXT,
+                year INTEGER,
+                timespicked INTEGER DEFAULT 0,
+                songs TEXT
+            )
+        """)
+        DBInterface.execute(getdb(), """
+            CREATE INDEX idx_album_id ON album (id)
+        """)
+    end
     return
 end
 

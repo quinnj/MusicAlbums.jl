@@ -1,6 +1,8 @@
 using Test, MusicAlbums
 
-server = @async MusicAlbums.run()
+const DBFILE = joinpath(dirname(pathof(MusicAlbums)), "../test/albums.sqlite")
+
+server = @async MusicAlbums.run(DBFILE)
 
 alb1 = Client.createAlbum("Free Yourself Up", "Lake Street Dive", 2018, ["Baby Don't Leave Me Alone With My Thoughts", "Good Kisser"])
 @test Client.pickAlbumToListen() == alb1
