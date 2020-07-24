@@ -20,34 +20,31 @@ HTTP.@register(ROUTER, "DELETE", "/album/*", deleteAlbum)
 pickAlbumToListen(req) = Service.pickAlbumToListen()::Album
 HTTP.@register(ROUTER, "GET", "/", pickAlbumToListen)
 
-createUser(req) = Service.createUser(JSON3.read(req.body))::User
-HTTP.@register(ROUTER, "POST", "/user", createUser)
-
-deleteUser(req) = Service.deleteUser(parse(Int, HTTP.URIs.splitpath(req.target)[2]))
-HTTP.@register(ROUTER, "DELETE", "/user/*", deleteUser)
-
-loginUser(req) = Service.loginUser(JSON3.read(req.body, User))::User
-HTTP.@register(ROUTER, "POST", "/user/login", loginUser)
-
-function authHandler(req)
-    if endswith(req.target, "login") || endswith(req.target, "user")
-        user = HTTP.handle(ROUTER, req)
-        resp = HTTP.Response(200, JSON3.write(user))
-        Auth.addtoken!(resp, user)
-        return resp
-    else
-        return withcontext(User(req)) do
-            HTTP.Response(200, JSON3.write(HTTP.handle(ROUTER, req)))
-        end
+function contextHandler(req)
+    withcontext(User(req)) do
+        HTTP.Response(200, JSON3.write(HTTP.handle(ROUTER, req)))
     end
 end
+
+const AUTH_ROUTER = HTTP.Router(contextHandler)
+
+function authenticate(user::User)
+    resp = HTTP.Response(200, JSON3.write(user))
+    return Auth.addtoken!(resp, user)
+end
+
+createUser(req) = authenticate(Service.createUser(JSON3.read(req.body))::User)
+HTTP.@register(AUTH_ROUTER, "POST", "/user", createUser)
+
+loginUser(req) = authenticate(Service.loginUser(JSON3.read(req.body, User))::User)
+HTTP.@register(AUTH_ROUTER, "POST", "/user/login", loginUser)
 
 function requestHandler(req)
     start = Dates.now(Dates.UTC)
     @info (timestamp=start, event="ServiceRequestBegin", tid=Threads.threadid(), method=req.method, target=req.target)
     local resp
     try
-        resp = authHandler(req)
+        resp = HTTP.handle(AUTH_ROUTER, req)
     catch e
         if e isa Auth.Unauthenticated
             resp = HTTP.Response(401)

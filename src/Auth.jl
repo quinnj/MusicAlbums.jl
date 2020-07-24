@@ -22,7 +22,7 @@ function addtoken!(resp::HTTP.Response, user::User)
     keyid = first(first(JWT_AUTH_KEYS[].keys))
     sign!(jwt, JWT_AUTH_KEYS[], keyid)
     HTTP.setheader(resp, "Set-Cookie" => "$JWT_TOKEN_COOKIE_NAME=$(join([jwt.header, jwt.payload, jwt.signature], '.')); Expires=$(Dates.format(exp, DATE_FORMAT))")
-    return
+    return resp
 end
 
 struct Unauthenticated <: Exception end
