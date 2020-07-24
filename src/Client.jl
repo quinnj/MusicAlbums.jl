@@ -1,9 +1,26 @@
 module Client
 
-using HTTP, JSON3
+using HTTP, JSON3, Base64
 using ..Model
 
 const SERVER = Ref{String}("http://localhost:8080")
+
+function createUser(username, password)
+    body = (; username, password=base64encode(password))
+    resp = HTTP.post(string(SERVER[], "/user"), [], JSON3.write(body))
+    return JSON3.read(resp.body, User)
+end
+
+function deleteUser(userId)
+    resp = HTTP.delete(string(SERVER[], "/user/$userId"))
+    return
+end
+
+function loginUser(username, password)
+    body = (; username, password=base64encode(password))
+    resp = HTTP.post(string(SERVER[], "/user/login"), [], JSON3.write(body))
+    return JSON3.read(resp.body, User)
+end
 
 function createAlbum(name, artist, year, songs)
     body = (; name, artist, year, songs)

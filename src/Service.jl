@@ -45,4 +45,27 @@ function pickAlbumToListen()
     return pickedAlbum
 end
 
+function createUser(user)
+    @assert haskey(user, :username) && !isempty(user.username)
+    @assert haskey(user, :password) && !isempty(user.password)
+    user = User(user.username, user.password)
+    Mapper.create!(user)
+    return user
+end
+
+function deleteUser(id)
+    Mapper.deleteUser(id)
+    return
+end
+
+function loginUser(user)
+    persistedUser = Mapper.get(user)
+    if persistedUser.password == user.password
+        persistedUser.password = ""
+        return persistedUser
+    else
+        throw(ArgumentError("incorrect password for $(user.username)"))
+    end
+end
+
 end # module

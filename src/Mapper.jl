@@ -1,6 +1,6 @@
 module Mapper
 
-using ..Model
+using ..Model, ..Contexts
 using SQLite, DBInterface, Strapping, Tables
 
 const DB = Ref{SQLite.DB}()
@@ -15,6 +15,7 @@ function init(dbfile)
         DBInterface.execute(getdb(), """
             CREATE TABLE album (
                 id INTEGER,
+                userid INTEGER,
                 name TEXT,
                 artist TEXT,
                 year INTEGER,
@@ -25,13 +26,28 @@ function init(dbfile)
         DBInterface.execute(getdb(), """
             CREATE INDEX idx_album_id ON album (id)
         """)
+        DBInterface.execute(getdb(), """
+            CREATE INDEX idx_album_userid ON album (userid)
+        """)
+        DBInterface.execute(getdb(), """
+            CREATE INDEX idx_album_id_userid ON album (id, userid)
+        """)
+        DBInterface.execute(getdb(), """
+            CREATE TABLE user (
+                id INTEGER PRIMARY KEY,
+                username TEXT,
+                password TEXT
+            )
+        """)
     end
     return
 end
 
 function insert(album)
+    user = Contexts.getuser()
+    album.userid = user.id
     DBInterface.executemany(DBInterface.@prepare(getdb, """
-        INSERT INTO album (id, name, artist, year, timespicked, songs) VALUES(?, ?, ?, ?, ?, ?)
+        INSERT INTO album (id, userid, name, artist, year, timespicked, songs) VALUES(?, ?, ?, ?, ?, ?, ?)
     """), columntable(Strapping.deconstruct(album)))
     return
 end
@@ -48,10 +64,43 @@ function update(album)
     return
 end
 
-get(id) = Strapping.construct(Album, DBInterface.execute(DBInterface.@prepare(getdb, "SELECT * FROM album WHERE id = ?"), (id,)))
+function get(id)
+    user = Contexts.getuser()
+    cursor = DBInterface.execute(DBInterface.@prepare(getdb, "SELECT * FROM album WHERE id = ? AND userid = ?"), (id, user.id))
+    return Strapping.construct(Album, cursor)
+end
 
-delete(id) = DBInterface.execute(DBInterface.@prepare(getdb, "DELETE FROM album WHERE id = ?"), (id,))
+function delete(id)
+    user = Contexts.getuser()
+    DBInterface.execute(DBInterface.@prepare(getdb, "DELETE FROM album WHERE id = ? AND userid = ?"), (id, user.id))
+    return
+end
 
-getAllAlbums() = Strapping.construct(Vector{Album}, DBInterface.execute(DBInterface.@prepare(getdb, "SELECT * FROM album")))
+function getAllAlbums()
+    user = Contexts.getuser()
+    cursor = DBInterface.execute(DBInterface.@prepare(getdb, "SELECT * FROM album WHERE userid = ?"), (user.id,))
+    return Strapping.construct(Vector{Album}, cursor)
+end
+
+function create!(user::User)
+    x = DBInterface.execute(DBInterface.@prepare(getdb, """
+        INSERT INTO user (username, password) VALUES (?, ?)
+    """), (user.username, user.password))
+    user.id = DBInterface.lastrowid(x)
+    return
+end
+
+function deleteUser(id)
+    DBInterface.execute(DBInterface.@prepare(getdb, """
+        DELETE FROM user WHERE id = ?
+    """), (id,))
+    return
+end
+
+function get(user::User)
+    Strapping.construct(User, DBInterface.execute(DBInterface.@prepare(getdb, """
+        SELECT * FROM user WHERE username = ?
+    """), (user.username,)))
+end
 
 end # module

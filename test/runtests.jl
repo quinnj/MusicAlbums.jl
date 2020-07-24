@@ -1,8 +1,14 @@
 using Test, MusicAlbums
 
-const DBFILE = joinpath(dirname(pathof(MusicAlbums)), "../test/albums.sqlite")
+const DBFILE = joinpath(dirname(pathof(MusicAlbums)), "../test/albums2.sqlite")
+const AUTHFILE = "file://" * joinpath(dirname(pathof(MusicAlbums)), "../resources/authkeys.json")
 
-server = @async MusicAlbums.run(DBFILE)
+server = @async MusicAlbums.run(DBFILE, AUTHFILE)
+
+Client.createUser("quinnj", "julia4evah!")
+user = Client.loginUser("quinnj", "julia4evah!")
+
+using HTTP; HTTP.CookieRequest.default_cookiejar[1]
 
 alb1 = Client.createAlbum("Free Yourself Up", "Lake Street Dive", 2018, ["Baby Don't Leave Me Alone With My Thoughts", "Good Kisser"])
 @test Client.pickAlbumToListen() == alb1

@@ -5,6 +5,12 @@ export Model, Mapper, Service, Resource, Client
 include("Model.jl")
 using .Model
 
+include("Auth.jl")
+using .Auth
+
+include("Contexts.jl")
+using .Contexts
+
 include("Mapper.jl")
 using .Mapper
 
@@ -17,8 +23,9 @@ using .Resource
 include("Client.jl")
 using .Client
 
-function run(dbfile)
+function run(dbfile, authkeysfile)
     Mapper.init(dbfile)
+    Auth.init(authkeysfile)
     Resource.run()
 end
 

@@ -1,0 +1,32 @@
+{
+    "keys": [
+        {
+            "kid": "4Fytp3LfBhriD0eZ-k3aNS042bDiCZXg6bQNJmYoaE",
+            "kty": "oct",
+            "alg": "HS256",
+            "use": "sig",
+            "k": "dGhlcXVpY2ticm93bmZveGp1bXBlZG92ZXJ0aGVsYXo"
+        },
+        {
+            "kid": "5fYTP3lFbHRId0Ez-K3Ans042BdIczxG6BqnjMyOAe",
+            "kty": "oct",
+            "alg": "HS256",
+            "use": "sig",
+            "k": "cXVpY2ticm93bmZveGp1bXBlZG92ZXJ0aGVsYXp5ZG8"
+        },
+        {
+            "kid": "6fYTP3lFbHRId0Ez-K3Ans042BdIczxG6BqnjMyOAe",
+            "kty": "oct",
+            "alg": "HS384",
+            "use": "sig",
+            "k": "g3z71n0KOUSPgqaOqJkX1raLSgP27gR96HjN3BEYCHfoo9rf+hVpl/t093R5uRWN"
+        },
+        {
+            "kid": "7fYTP3lFbHRId0Ez-K3Ans042BdIczxG6BqnjMyOAe",
+            "kty": "oct",
+            "alg": "HS512",
+            "use": "sig",
+            "k": "9FiEdO6HRRWtxnoU4nirCvz9XNS5Cq+qBnre0b7WsK1yV2xzbtQ1fDUeMLOYGtAN1rpmUXHw0X/HFIbIrlfxWA"
+        }
+    ]
+}

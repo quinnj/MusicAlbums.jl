@@ -5,4 +5,5 @@ docs/site/
 *.jl.cov
 *.jl.*.cov
 *.jl.mem
+test/*.sqlite
 
