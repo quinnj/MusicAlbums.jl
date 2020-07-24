@@ -2,6 +2,12 @@ module MusicAlbums
 
 export Model, Mapper, Service, Resource, Client
 
+include("ConnectionPools.jl")
+using .ConnectionPools
+
+include("Workers.jl")
+using .Workers
+
 include("Model.jl")
 using .Model
 
@@ -24,6 +30,7 @@ include("Client.jl")
 using .Client
 
 function run(dbfile, authkeysfile)
+    Workers.init()
     Mapper.init(dbfile)
     Auth.init(authkeysfile)
     Resource.run()

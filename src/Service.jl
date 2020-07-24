@@ -42,6 +42,7 @@ function pickAlbumToListen()
     pickedAlbum.timespicked += 1
     Mapper.update(pickedAlbum)
     delete!(ExpiringCaches.getcache(getAlbum), (pickedAlbum.id,))
+    @info "picked album = $(pickedAlbum.name) on thread = $(Threads.threadid())"
     return pickedAlbum
 end
 
