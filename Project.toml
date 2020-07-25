@@ -11,6 +11,7 @@ ExpiringCaches = "bd5c46ae-da38-4b10-bcdd-5005402f2c4f"
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
 JWTs = "d850fbd6-035d-5a70-a269-1ca2e636ac6c"
+PackageCompiler = "9b87118b-4619-50d2-8e1e-99f35a4d4d9d"
 SQLite = "0aa819cd-b072-5ff4-a722-6bc24af294d9"
 Strapping = "3787371a-436b-4cb0-be6b-e772a55e3ebe"
 StructTypes = "856f2bd8-1eba-4b0a-8007-ebc267875bd4"
@@ -24,4 +25,3 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
 test = ["Test"]
-
