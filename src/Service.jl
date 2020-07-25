@@ -1,7 +1,7 @@
 module Service
 
 using Dates, ExpiringCaches
-using ..Model, ..Mapper
+using ..Model, ..Mapper, ..Auth
 
 function createAlbum(obj)
     @assert haskey(obj, :name) && !isempty(obj.name)
@@ -54,18 +54,13 @@ function createUser(user)
     return user
 end
 
-function deleteUser(id)
-    Mapper.deleteUser(id)
-    return
-end
-
 function loginUser(user)
     persistedUser = Mapper.get(user)
     if persistedUser.password == user.password
         persistedUser.password = ""
         return persistedUser
     else
-        throw(ArgumentError("incorrect password for $(user.username)"))
+        throw(Auth.Unauthenticated())
     end
 end
 
