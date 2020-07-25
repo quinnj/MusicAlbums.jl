@@ -45,7 +45,7 @@ function User(req::HTTP.Request)
             end
         end
     elseif HTTP.hasheader(req, JWT_TOKEN_COOKIE_NAME)
-        jwt = JWT(; jwt=HTTP.header(req, JWT_TOKEN_COOKIE_NAME))
+        jwt = JWT(; jwt=String(HTTP.header(req, JWT_TOKEN_COOKIE_NAME)))
         verified = false
         for kid in JWT_AUTH_KEYS[].keys
             validate!(jwt, JWT_AUTH_KEYS[], kid[1])
