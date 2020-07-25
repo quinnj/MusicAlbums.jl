@@ -35,14 +35,12 @@ uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 [[ExpiringCaches]]
 deps = ["Dates"]
 git-tree-sha1 = "676a852eabfda2f8c884781dfcd49e3acfb64136"
-repo-rev = "master"
-repo-url = "https://github.com/JuliaServices/ExpiringCaches.jl.git"
 uuid = "bd5c46ae-da38-4b10-bcdd-5005402f2c4f"
 version = "1.0.1"
 
 [[HTTP]]
 deps = ["Base64", "Dates", "IniFile", "MbedTLS", "Sockets"]
-git-tree-sha1 = "978e5c78dcbf8185bdb3b44a2b588cfb5e4db176"
+git-tree-sha1 = "4543c98201efb4092c939c9b2ab27c587fdbbe07"
 repo-rev = "jq/fixes"
 repo-url = "https://github.com/JuliaWeb/HTTP.jl.git"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
@@ -148,8 +146,6 @@ uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
 [[SQLite]]
 deps = ["BinaryProvider", "DBInterface", "Dates", "Libdl", "Random", "SQLite_jll", "Serialization", "Tables", "Test", "WeakRefStrings"]
 git-tree-sha1 = "64b564ab5091a26bfea9e0230939d718edb4552f"
-repo-rev = "master"
-repo-url = "https://github.com/JuliaDatabases/SQLite.jl.git"
 uuid = "0aa819cd-b072-5ff4-a722-6bc24af294d9"
 version = "1.0.5"
 
