@@ -11,11 +11,6 @@ function createUser(username, password)
     return JSON3.read(resp.body, User)
 end
 
-function deleteUser(userId)
-    resp = HTTP.delete(string(SERVER[], "/user/$userId"); cookies=true)
-    return
-end
-
 function loginUser(username, password)
     body = (; username, password=base64encode(password))
     resp = HTTP.post(string(SERVER[], "/user/login"), [], JSON3.write(body); cookies=true)

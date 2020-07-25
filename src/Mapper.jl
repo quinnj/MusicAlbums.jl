@@ -100,13 +100,6 @@ function create!(user::User)
     return
 end
 
-function deleteUser(id)
-    DBInterface.execute(DBInterface.@prepare(getdb, """
-        DELETE FROM user WHERE id = ?
-    """), (id,))
-    return
-end
-
 function get(user::User)
     cursor = execute("SELECT * FROM user WHERE username = ?", (user.username,))
     return Strapping.construct(User, cursor)
