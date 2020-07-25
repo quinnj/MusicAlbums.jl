@@ -13,7 +13,7 @@ end
 
 # generating a new token for a user
 const DATE_FORMAT = DateFormat("e, dd u yyyy HH:MM:SS G\\MT") # Wed, 21 Oct 2015 07:28:00 GMT
-const JWT_TOKEN_COOKIE_NAME = "X-MusicAlbums-Jwt-Token"
+const JWT_TOKEN_COOKIE_NAME = "__session"
 
 function addtoken!(resp::HTTP.Response, user::User)
     exp = Dates.now(Dates.UTC) + Dates.Hour(12)

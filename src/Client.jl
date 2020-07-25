@@ -3,7 +3,7 @@ module Client
 using HTTP, JSON3, Base64
 using ..Model
 
-const SERVER = Ref{String}("http://localhost:8080")
+const SERVER = Ref{String}("https://musicalbums-revd52bpca-uc.a.run.app")
 
 function createUser(username, password)
     body = (; username, password=base64encode(password))
