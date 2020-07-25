@@ -40,11 +40,9 @@ version = "1.0.1"
 
 [[HTTP]]
 deps = ["Base64", "Dates", "IniFile", "MbedTLS", "Sockets"]
-git-tree-sha1 = "4543c98201efb4092c939c9b2ab27c587fdbbe07"
-repo-rev = "jq/fixes"
-repo-url = "https://github.com/JuliaWeb/HTTP.jl.git"
+git-tree-sha1 = "2ac03263ce44be4222342bca1c51c36ce7566161"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-version = "0.8.16"
+version = "0.8.17"
 
 [[IniFile]]
 deps = ["Test"]
