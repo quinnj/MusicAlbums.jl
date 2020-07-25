@@ -1,2 +1,2 @@
 import MusicAlbums
-include(joinpath(pkgdir(MusicAlbums), "test", "runtests.jl"))
+include(joinpath(dirname(pathof(MusicAlbums)), "../test", "runtests.jl"))
