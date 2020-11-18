@@ -11,4 +11,4 @@ RUN julia deploy/packagecompile.jl
 
 EXPOSE 8080
 
-ENTRYPOINT ["julia", "-JMusicAlbums.so", "-e", "MusicAlbums.run(\"test/albums2.sqlite\", \"file:///home/resources/authkeys.json\")"]
+ENTRYPOINT ["julia", "-JMusicAlbums.so", "-t", "2", "-e", "MusicAlbums.run(\"test/albums2.sqlite\", \"file:///home/resources/authkeys.json\")"]
