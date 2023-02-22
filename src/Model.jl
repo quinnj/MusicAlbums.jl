@@ -12,7 +12,7 @@ mutable struct Album
     artist::String
     year::Int64
     songs::Vector{String}
-    timesPicked::Int64 # service-managed
+    timespicked::Int64 # service-managed
 end
 
 ==(x::Album, y::Album) = x.id == y.id
